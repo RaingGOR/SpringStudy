@@ -1,6 +1,6 @@
 package me.raingor;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class TestSpring {
     public static void main(String[] args) {
