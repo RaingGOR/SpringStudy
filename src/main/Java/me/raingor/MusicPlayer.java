@@ -1,18 +1,33 @@
 package me.raingor;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MusicPlayer {
-    private ClassicalMusic classicalMusic;
-    private RockMusic rockMusic;
+    @Value("${musicPlayer.name}")
+    private String name;
+    @Value("${musicPlayer.volume}")
+    private int volume;
 
-    @Autowired
-    public MusicPlayer(ClassicalMusic classicalMusic, RockMusic rockMusic) {
-        this.classicalMusic = classicalMusic;
-        this.rockMusic = rockMusic;
+    public String getName() {
+        return name;
     }
+
+    public int getVolume() {
+        return volume;
+    }
+
+    private Music music1;
+    private Music music2;
+
+    public MusicPlayer(@Qualifier("classicalMusic") Music music1, @Qualifier("someRockMusic") Music music2) {
+        this.music1 = music1;
+        this.music2 = music2;
+    }
+
 // IoC
 //    public MusicPlayer(Music music) {
 //        this.music = music;
@@ -25,6 +40,7 @@ public class MusicPlayer {
 
     public String playMusic() {
 
-        return ("Playing: " + classicalMusic.getSong() + ", next: " + rockMusic.getSong());
+        return ("Playing: " + music1.getSong())
+                + ("\n Playing: " + music2.getSong());
     }
 }
